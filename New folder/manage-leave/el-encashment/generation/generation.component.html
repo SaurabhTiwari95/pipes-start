@@ -1,0 +1,122 @@
+<hr class="custom-hr-with-large-width-ang7" *ngIf="service.employeeDetails.length">
+<div class="row" *ngIf="service.employeeDetails.length">
+  <div class="col-md-12">
+    <h4 class="heading-with-hr"> Employee Details
+      <span class="pull-right italic-text">Total Employee(s) : {{ service.employeeDetails.length }}</span>
+    </h4>
+  </div>
+    <!-- Search bar starts here -->
+    <div class="col-md-12 form-group">
+      <div class="col-md-10 np-lr col-xs-12">
+        <p><b>Note:</b> Set 0 for those users who do not want to Encash their EL(s).</p>
+      </div>
+      <div class="col-md-2 np-lr col-xs-12">
+        <span style="display: inline-block;width:100%;">
+          <input type="text" placeholder="Search Here" class="form-control" (keyup)='filterLeaveTable($event)'>
+        </span>
+      </div>
+    </div>
+    <!-- Search bar Ends here -->
+ 
+    <div class="col-md-12 form-group">
+      <ngx-datatable class="material" [columnMode]="'flex'" [headerHeight]="50" [limit]="10" [footerHeight]="50"
+      [rowHeight]="'auto'" [rows]="service.dataForTable" [scrollbarH]="true" inline-editable-table>
+      <ngx-datatable-column name="Employee" [flexGrow]="1" [sortable]="true" prop="employeeName">
+        <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-cell-template>
+          <span>{{ row.employeeName }} - {{ row.employeeId }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Division" [flexGrow]="1" [sortable]="true" prop="divisionName">
+        <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-cell-template>
+          <span>{{ row.divisionName }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Department" [flexGrow]="1" [maxWidth]="220" [sortable]="true" prop="departmentName">
+        <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-cell-template>
+          <span>{{ row.departmentName }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [flexGrow]="0.7" [maxWidth]="250"  [sortable]="true" prop="basicAmount">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          <div class="datatable-header-cell-template-wrap">
+            <span class="pull-right">
+              Basic Salary
+            </span>
+          </div>
+        </ng-template>
+        <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-cell-template>
+          <div class="datatable-header-cell-template-wrap">
+            <span class="pull-right">
+              {{ row.basicAmount | currency:"INR"}}
+            </span>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [flexGrow]="0.7" [maxWidth]="250" [sortable]="true" prop="balanceLeaves">
+        <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-header-template>
+          <div class="datatable-header-cell-template-wrap">
+          <span class="pull-right">
+            Balance EL
+          </span>
+        </div>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div class="datatable-header-cell-template-wrap">
+          <span class="pull-right">
+            {{ row.balanceLeaves }}
+          </span>
+        </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [flexGrow]="0.7" [maxWidth]="250" [sortable]="true" prop="leavesEncashed">
+        <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-header-template>
+          <div class="datatable-header-cell-template-wrap">
+          <span class="pull-right">
+            Encash EL
+          </span>
+        </div>
+        </ng-template>
+        <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          <div class="datatable-header-cell-template-wrap">
+          <span class="ng-star-inserted pull-right" [ngClass]="{'modified-row' : row.encashElChanged}">
+            <input type="number" class="editable form-control mgn-t-5" style="max-width: 80px; text-align: right;"
+              name="encashel{{rowIndex}}" [(ngModel)]="row.leavesEncashed" required (input)="checkEncashEL(row);"
+              max="row.balanceLeaves" placeholder="Encash EL"   />
+          </span>
+        </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [flexGrow]="1" [maxWidth]="250" [sortable]="true" prop="encashedAmount" [maxWidth]="250">
+        <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value" ngx-datatable-header-template>
+          <div class="datatable-header-cell-template-wrap">
+          <span class="pull-right">
+            Encash Amount
+          </span>
+        </div>
+        </ng-template>
+        <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          <div class="datatable-header-cell-template-wrap">
+          <span class="pull-right" *ngIf="row.encashedAmount >= 0;else showInvalidMsg">
+            {{row.encashedAmount | currency:"INR"  }}
+          </span>
+        </div>
+          <ng-template #showInvalidMsg>
+            <div class="datatable-header-cell-template-wrap">
+            <span class="pull-right text-danger">
+              {{row.encashedAmount}}
+            </span>
+          </div>
+          </ng-template>
+          <!--the amount will be updated after an employee changes the encashEl field-->
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+      <div class="col-md-12 np-lr">
+        <!-- <div class="col-md-6 np-lr">
+          <i><b>Total Employee(s) : {{ service.employeeDetails.length }} </b></i>
+        </div> -->
+        <button type="button" class="btn btn-primary pull-right" 
+        [disabled]=" dataNotChanged () == 0 || service.disabledButtonAndField " (click)="upsertleavesEncashed()" col-button-only  [permissions]="['su', 'F167P11_']">Update Details</button>
+      </div>
+</div>

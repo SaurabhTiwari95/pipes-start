@@ -1,0 +1,33 @@
+
+a[aria-expanded=true]:not(.remove-hovering-focusing) {
+    color: #2e9694;
+    font-size: 18px;
+  }
+   #accordion
+   {
+     margin-left: 1px;
+     margin-right: 1px;
+   }
+   .remove-hovering-focusing,.remove-hovering-focusing:hover,.remove-hovering-focusing:focus,.remove-hovering-focusing:visited{
+     color: #555;
+   }
+   .panel-default>.panel-heading{
+    background-color: #fff;
+  }
+  ::ng-deep .nsm-dialog{
+    max-width: unset !important;
+    overflow-y: initial !important;
+    width: calc(100% - 20px) !important;
+}
+
+::ng-deep .overlay.nsm-overlay-open{
+    overflow: hidden !important;
+    padding-left: 0px !important;
+}
+
+::ng-deep .nsm-body .body{
+    min-height: 35vh !important;
+    max-height: 76vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}

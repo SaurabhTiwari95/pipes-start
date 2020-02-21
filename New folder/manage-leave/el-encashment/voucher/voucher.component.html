@@ -1,0 +1,8 @@
+<ng-container 
+*ngIf=" (service.leaveManageObj.slctdAction.slctdVoucherCategory && service.leaveManageObj.slctdAction.slctdVoucherCategory.categoryId==1) && service.leaveDetailsPendingForVoucher.employeeVoucherDetails.length">
+<app-el-voucher-creation>
+</app-el-voucher-creation>
+</ng-container>
+<ng-container  *ngIf="(service.leaveManageObj.slctdAction.slctdVoucherCategory && service.leaveManageObj.slctdAction.slctdVoucherCategory.categoryId==2) && service.voucherDeletionDetails.voucherDetails.length" >
+<app-el-voucher-deletion></app-el-voucher-deletion>
+</ng-container>

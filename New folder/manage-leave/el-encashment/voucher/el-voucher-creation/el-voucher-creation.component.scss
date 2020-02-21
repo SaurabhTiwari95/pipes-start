@@ -1,0 +1,27 @@
+.voucher {
+    text-align: center;
+  }
+
+  .payment-submission {
+    text-align: center;
+    color: #2e9694;
+    font-weight: 10;
+  }
+
+  ::ng-deep .nsm-dialog{
+    max-width: unset !important;
+    overflow-y: initial !important;
+    width: calc(100% - 20px) !important;
+}
+
+::ng-deep .overlay.nsm-overlay-open{
+    overflow: hidden !important;
+    padding-left: 0px !important;
+}
+
+::ng-deep .nsm-body .body{
+    min-height: 50vh !important;
+    max-height: 35vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
